@@ -3,7 +3,20 @@
   <name>Bisexuality</name>
   <author>Killface</author>
   <url></url>
-  <targetVersion>0.14.1241</targetVersion>
-  <description>Extends the Gay trait with bisexuality. Also modifies the attraction betwween ugly people towards each other so that they have more empathy. 
-</description>
+  <targetVersion>0.14.1249</targetVersion>
+  <description>
+Adds bisexuality to RimWorld. Bisexual pawns have no preference and can choose both genders as partner.
+Also modifies the opinion and attraction of ugly people towards each other so that they show more empathy.
+No more outcasts among outcasts.
+
+Only new pawns spawned can be bisexual. If you choose to remove this mod from a current game, remove the following lines from your savegame:
+
+&lt;li&gt;
+  &lt;def&gt;Gay&lt;/def&gt;
+  &lt;degree&gt;1&lt;/degree&gt;
+&lt;/li&gt;
+
+Removing only the line &lt;degree&gt;1&lt;/degree&gt; will change he bisexual trait to gay.
+    
+  </description>
 </ModMetaData>

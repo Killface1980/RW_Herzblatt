@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThoughtDefs>
+
+  <!-- affecting opinion -->
+
+  <ThoughtDef>
+    <defName>Ugly</defName>
+    <thoughtClass>Thought_SituationalSocial</thoughtClass>
+    <workerClass>RW_Bisexuality.ThoughtWorker_Ugly</workerClass>
+    <stages>
+      <li>
+        <label>ugly</label>
+        <baseOpinionOffset>-20</baseOpinionOffset>
+      </li>
+      <li>
+        <label>staggeringly ugly</label>
+        <baseOpinionOffset>-80</baseOpinionOffset>
+      </li>
+      <li>
+        <label>ugly like me</label>
+        <baseOpinionOffset>+15</baseOpinionOffset>
+      </li>
+      <li>
+        <label>even uglier than me</label>
+        <baseOpinionOffset>+25</baseOpinionOffset>
+      </li>
+      <li>
+        <label>ugly but sweet</label>
+        <baseOpinionOffset>35</baseOpinionOffset>
+      </li>
+      <li>
+        <label>finding beauty in ugly faces</label>
+        <baseOpinionOffset>+45</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</ThoughtDefs>

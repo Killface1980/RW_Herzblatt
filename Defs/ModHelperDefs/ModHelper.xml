@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <CommunityCoreLibrary.ModHelperDef>
+    <defName>RW_Bisexuality</defName>
+    <ModName>RW_Bisexuality</ModName>
+    <minCCLversion>0.14.2</minCCLversion>
+    <SpecialInjectors>
+      <li>RW_Bisexuality.Bisexuality_SpecialInjector</li>
+    </SpecialInjectors>
+  </CommunityCoreLibrary.ModHelperDef>
+</Defs>

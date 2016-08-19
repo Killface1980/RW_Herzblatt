@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- Vanilla override -->
+
+  <TraitDef>
+    <defName>Gay</defName>
+    <commonality>0.6</commonality>
+    <degreeDatas>
+      <li>
+        <label>bisexual</label>
+        <description>NAME is romantically attracted to people of both genders.</description>
+        <degree>1</degree>
+      </li>
+      <li>
+        <label>gay</label>
+        <description>NAME is romantically attracted to people of HIS own gender.</description>
+        <degree>0</degree>
+      </li>
+    </degreeDatas>
+  </TraitDef>
+
+</Defs>

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using CommunityCoreLibrary;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -20,12 +21,11 @@ namespace RW_Bisexuality.Detouring
             {
                 return 0f;
             }
-            if ((pawn.gender == otherPawn.gender && otherPawn.story.traits.HasTrait(TraitDefOf.Gay) && otherPawn.story.traits.DegreeOfTrait(TraitDef.Named("Gay")) == 0) || !request.AllowGay)
+            if (pawn.gender == otherPawn.gender && (!otherPawn.story.traits.HasTrait(TraitDefOf.Gay) || !otherPawn.story.traits.HasTrait(TraitDef.Named("Bisexual")) || !request.AllowGay))
             {
                 return 0f;
             }
-
-            if (pawn.gender != otherPawn.gender && otherPawn.story.traits.HasTrait(TraitDefOf.Gay) && otherPawn.story.traits.DegreeOfTrait(TraitDef.Named("Gay")) == 0)
+            if (pawn.gender != otherPawn.gender && otherPawn.story.traits.HasTrait(TraitDefOf.Gay))
             {
                 return 0f;
             }

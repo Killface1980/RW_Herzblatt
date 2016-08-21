@@ -47,9 +47,9 @@ namespace RW_Bisexuality.Detouring
                 }
                 else
                 {
-                    if (otherPawn.gender == Gender.Male)
+                    if (!pawn.story.traits.HasTrait(TraitDef.Named("Bisexual"))&& otherPawn.gender == Gender.Male)
                     {
-                        return 0.05f;
+                        return 0.01f;
                     }
                 }
                 num2 = GenMath.FlatHill(16f, 20f, pawnAgeBiological, pawnAgeBiological + 15f, otherPawnAgeBiological);
@@ -68,7 +68,7 @@ namespace RW_Bisexuality.Detouring
                 }
                 else
                 {
-                    if (otherPawn.gender == Gender.Female)
+                    if (!pawn.story.traits.HasTrait(TraitDef.Named("Bisexual")) && otherPawn.gender == Gender.Female)
                     {
                         num = 0.15f;
                     }

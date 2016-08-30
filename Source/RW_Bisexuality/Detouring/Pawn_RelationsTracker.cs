@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using CommunityCoreLibrary;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -14,16 +13,16 @@ namespace RW_Bisexuality.Detouring
         [Detour(typeof(RimWorld.Pawn_RelationsTracker), bindingFlags = (BindingFlags.Instance | BindingFlags.Public))]
         public float AttractionTo(Pawn otherPawn)
         {
-            if (pawn.story.traits.DegreeOfTrait(TraitDef.Named("Gay")) == 1)
-            {                
-                pawn.story.traits.RemoveTrait(TraitDef.Named("Gay"));
-                pawn.story.traits.GainTrait(new Trait(TraitDef.Named("Bisexual")));
-            }
-            if (otherPawn.story.traits.DegreeOfTrait(TraitDef.Named("Gay")) == 1)
-            {
-                otherPawn.story.traits.RemoveTrait(TraitDef.Named("Gay"));
-                otherPawn.story.traits.GainTrait(new Trait(TraitDef.Named("Bisexual")));
-            }
+          //if (pawn.story.traits.DegreeOfTrait(TraitDef.Named("Gay")) == 1)
+          //{                
+          //    pawn.story.traits.RemoveTrait(TraitDef.Named("Gay"));
+          //    pawn.story.traits.GainTrait(new Trait(TraitDef.Named("Bisexual")));
+          //}
+          //if (otherPawn.story.traits.DegreeOfTrait(TraitDef.Named("Gay")) == 1)
+          //{
+          //    otherPawn.story.traits.RemoveTrait(TraitDef.Named("Gay"));
+          //    otherPawn.story.traits.GainTrait(new Trait(TraitDef.Named("Bisexual")));
+          //}
             if (pawn.def != otherPawn.def || pawn == otherPawn)
             {
                 return 0f;

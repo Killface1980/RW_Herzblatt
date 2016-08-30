@@ -2,9 +2,8 @@
 using System.Reflection;
 using RimWorld;
 using Verse;
-// Toggle in Hospitality Properties
 #if NoCCL
-using RW_FacialStuff.NoCCL;
+using RW_Bisexuality.NoCCL;
 #else
 using CommunityCoreLibrary;
 #endif

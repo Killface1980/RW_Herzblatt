@@ -1,7 +1,8 @@
 ﻿using System;
+using RimWorld;
 using Verse;
 
-namespace RimWorld
+namespace RW_Herzblatt
 {
     public class ThoughtWorker_Disfigured : ThoughtWorker
     {

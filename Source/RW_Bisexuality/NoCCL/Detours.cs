@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Verse;
 
-namespace RW_Bisexuality.NoCCL
+namespace RW_Herzblatt.NoCCL
 {
 #if NoCCL
     /// <summary>

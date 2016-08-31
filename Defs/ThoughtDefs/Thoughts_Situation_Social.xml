@@ -6,7 +6,7 @@
   <ThoughtDef>
     <defName>Ugly</defName>
     <thoughtClass>Thought_SituationalSocial</thoughtClass>
-    <workerClass>RW_Bisexuality.ThoughtWorker_Ugly</workerClass>
+    <workerClass>RW_Herzblatt.ThoughtWorker_Ugly</workerClass>
     <stages>
       <li>
         <label>ugly</label>
@@ -35,4 +35,55 @@
     </stages>
   </ThoughtDef>
 
+
+  <ThoughtDef>
+    <defName>AnnoyingVoice</defName>
+    <thoughtClass>Thought_SituationalSocial</thoughtClass>
+    <workerClass>RW_Herzblatt.ThoughtWorker_AnnoyingVoice</workerClass>
+    <stages>
+     <li>
+        <label>annoying voice</label>
+        <baseOpinionOffset>-25</baseOpinionOffset>
+      </li>
+      <li>
+        <label>what a lovely voice!</label>
+        <baseOpinionOffset>25</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>CreepyBreathing</defName>
+    <thoughtClass>Thought_SituationalSocial</thoughtClass>
+    <workerClass>RW_Herzblatt.ThoughtWorker_CreepyBreathing</workerClass>
+    <stages>
+      <li>
+        <label>creepy breathing</label>
+        <baseOpinionOffset>-25</baseOpinionOffset>
+      </li>
+      <li>
+        <label>nice breathing</label>
+        <baseOpinionOffset>25</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Disfigured</defName>
+    <thoughtClass>Thought_SituationalSocial</thoughtClass>
+    <workerClass>RW_Herzblatt.ThoughtWorker_Disfigured</workerClass>
+    <nullifyingTraits>
+      <li>Psychopath</li>
+    </nullifyingTraits>
+    <stages>
+     <li>
+        <label>disfigured</label>
+        <baseOpinionOffset>-15</baseOpinionOffset>
+      </li>
+    <li>
+      <label>disfigured like me</label>
+      <baseOpinionOffset>15</baseOpinionOffset>
+    </li>
+    </stages>
+  </ThoughtDef>
 </ThoughtDefs>

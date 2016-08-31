@@ -7,8 +7,8 @@
     <ProjectGuid>{E449851B-C2F6-445B-A18F-7B8E499E0B03}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RW_Bisexuality</RootNamespace>
-    <AssemblyName>RW_Bisexuality</AssemblyName>
+    <RootNamespace>RW_Herzblatt</RootNamespace>
+    <AssemblyName>RW_Herzblatt</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
@@ -60,14 +60,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bisexuality_SpecialInjector.cs" />
+    <Compile Include="Herzblatt_SpecialInjector.cs" />
     <Compile Include="DetourAttribute.cs" />
-    <Compile Include="Detouring\LovePartnerRelationUtility.cs" />
-    <Compile Include="Detouring\Pawn_RelationsTracker.cs" />
+    <Compile Include="ThoughtWorker\ThoughtWorker_Disfigured.cs" />
+    <Compile Include="ThoughtWorker\ThoughtWorker_AnnoyingVoice.cs" />
+    <Compile Include="ThoughtWorker\ThoughtWorker_CreepyBreathing.cs" />
+    <Compile Include="Detouring\_LovePartnerRelationUtility.cs" />
+    <Compile Include="Detouring\_Pawn_RelationsTracker.cs" />
     <Compile Include="NoCCL\SpecialInjector.cs" />
     <Compile Include="NoCCL\Detours.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThoughtWorker_Ugly.cs" />
+    <Compile Include="ThoughtWorker\ThoughtWorker_Ugly.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\About\About.xml">

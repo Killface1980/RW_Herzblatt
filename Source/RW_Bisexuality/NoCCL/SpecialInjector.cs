@@ -2,7 +2,7 @@
 using System.Reflection;
 using Verse;
 
-namespace RW_Bisexuality.NoCCL
+namespace RW_Herzblatt.NoCCL
 {
     public class SpecialInjector
     {
@@ -27,7 +27,7 @@ namespace RW_Bisexuality.NoCCL
 
         private static void Inject()
         {
-            var injector = new Bisexuality_SpecialInjector();
+            var injector = new Herzblatt_SpecialInjector();
             if (injector.Inject()) Log.Message(AssemblyName + " injected.");
             else Log.Error(AssemblyName + " failed to get injected properly.");
         }

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Reflection;
 using RimWorld;
+using RW_Herzblatt.NoCCL;
 using Verse;
 #if NoCCL
-using RW_Bisexuality.NoCCL;
+
 #else
 using CommunityCoreLibrary;
 #endif
 
-namespace RW_Bisexuality
+namespace RW_Herzblatt
 {
 
-    public class Bisexuality_SpecialInjector : SpecialInjector
+    public class Herzblatt_SpecialInjector : SpecialInjector
     {
 
-        private static Assembly Assembly { get { return Assembly.GetAssembly(typeof(Bisexuality_SpecialInjector)); } }
+        private static Assembly Assembly { get { return Assembly.GetAssembly(typeof(Herzblatt_SpecialInjector)); } }
 
         private static readonly BindingFlags[] bindingFlagCombos = {
             BindingFlags.Instance | BindingFlags.Public, BindingFlags.Static | BindingFlags.Public,

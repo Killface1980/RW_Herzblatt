@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CommunityCoreLibrary;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace RW_Bisexuality.Detouring
+namespace RW_Herzblatt.Detouring
 {
-    public static class LovePartnerRelationUtility
+    internal static class _LovePartnerRelationUtility
     {
         [Detour(typeof(RimWorld.LovePartnerRelationUtility), bindingFlags = (BindingFlags.Static | BindingFlags.Public))]  // RimWorld.LovePartnerRelationUtility
         public static float LovePartnerRelationGenerationChance(Pawn pawn, Pawn otherPawn, PawnGenerationRequest request, bool ex)

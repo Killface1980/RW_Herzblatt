@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-  <name>Bisexuality + Ugly People Opinion Boost</name>
+  <name>Herzblatt</name>
   <author>Killface</author>
   <url>https://ludeon.com/forums/index.php?topic=20771.msg228265#msg228265</url>
-  <targetVersion>0.15.1248</targetVersion>
+  <targetVersion>0.15.1280</targetVersion>
   <description>
 Adds bisexuality to RimWorld. Bisexual pawns have no preference and can choose both genders as partner. 
 Also modifies the opinion and attraction of ugly people towards each other so that they show more empathy. 

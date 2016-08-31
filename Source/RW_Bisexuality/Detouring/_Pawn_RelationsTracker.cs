@@ -3,32 +3,36 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace RW_Bisexuality.Detouring
+namespace RW_Herzblatt.Detouring
 {
-    public class Pawn_RelationsTracker
+    internal static class _Pawn_RelationsTracker
     {
-        private Pawn pawn;
+        internal static FieldInfo _pawn;
 
-        // RimWorld.Pawn_RelationsTracker
-        [Detour(typeof(RimWorld.Pawn_RelationsTracker), bindingFlags = (BindingFlags.Instance | BindingFlags.Public))]
-        public float AttractionTo(Pawn otherPawn)
+        internal static Pawn GetPawn(this Pawn_RelationsTracker _this)
         {
-          //if (pawn.story.traits.DegreeOfTrait(TraitDef.Named("Gay")) == 1)
-          //{                
-          //    pawn.story.traits.RemoveTrait(TraitDef.Named("Gay"));
-          //    pawn.story.traits.GainTrait(new Trait(TraitDef.Named("Bisexual")));
-          //}
-          //if (otherPawn.story.traits.DegreeOfTrait(TraitDef.Named("Gay")) == 1)
-          //{
-          //    otherPawn.story.traits.RemoveTrait(TraitDef.Named("Gay"));
-          //    otherPawn.story.traits.GainTrait(new Trait(TraitDef.Named("Bisexual")));
-          //}
+            if (_pawn == null)
+            {
+                _pawn = typeof(Pawn_RelationsTracker).GetField("pawn", BindingFlags.Instance | BindingFlags.NonPublic);
+                if (_pawn == null)
+                {
+                    Log.ErrorOnce("Unable to reflect Pawn_RelationsTracker.pawn!", 305432421);
+                }
+            }
+            return (Pawn)_pawn.GetValue(_this);
+        }
+
+        [Detour(typeof(Pawn_RelationsTracker), bindingFlags = (BindingFlags.Instance | BindingFlags.Public))]
+        public static float AttractionTo(this Pawn_RelationsTracker _this, Pawn otherPawn)
+        {
+            var pawn = _this.GetPawn();
+
             if (pawn.def != otherPawn.def || pawn == otherPawn)
             {
                 return 0f;
             }
-            float num = 1f;
-            float num2 = 1f;
+            float sexualityMod = 1f;
+            float ageMod = 1f;
             float pawnAgeBiological = pawn.ageTracker.AgeBiologicalYearsFloat;
             float otherPawnAgeBiological = otherPawn.ageTracker.AgeBiologicalYearsFloat;
             if (pawn.gender == Gender.Male)
@@ -48,10 +52,10 @@ namespace RW_Bisexuality.Detouring
                 {
                     if (!pawn.story.traits.HasTrait(TraitDef.Named("Bisexual"))&& otherPawn.gender == Gender.Male)
                     {
-                        return 0.01f;
+                        sexualityMod = 0.03f;
                     }
                 }
-                num2 = GenMath.FlatHill(16f, 20f, pawnAgeBiological, pawnAgeBiological + 15f, otherPawnAgeBiological);
+                ageMod = GenMath.FlatHill(16f, 20f, pawnAgeBiological, pawnAgeBiological + 15f, otherPawnAgeBiological);
             }
             else if (pawn.gender == Gender.Female)
             {
@@ -69,7 +73,7 @@ namespace RW_Bisexuality.Detouring
                 {
                     if (!pawn.story.traits.HasTrait(TraitDef.Named("Bisexual")) && otherPawn.gender == Gender.Female)
                     {
-                        num = 0.15f;
+                        sexualityMod = 0.15f;
                     }
                 }
 
@@ -79,52 +83,52 @@ namespace RW_Bisexuality.Detouring
                 }
                 if (otherPawnAgeBiological < pawnAgeBiological - 3f)
                 {
-                    num2 = Mathf.InverseLerp(pawnAgeBiological - 10f, pawnAgeBiological - 3f, otherPawnAgeBiological) * 0.2f;
+                    ageMod = Mathf.InverseLerp(pawnAgeBiological - 10f, pawnAgeBiological - 3f, otherPawnAgeBiological) * 0.2f;
                 }
                 else
                 {
-                    num2 = GenMath.FlatHill(0.2f, pawnAgeBiological - 3f, pawnAgeBiological, pawnAgeBiological + 10f, pawnAgeBiological + 40f, 0.1f, otherPawnAgeBiological);
+                    ageMod = GenMath.FlatHill(0.2f, pawnAgeBiological - 3f, pawnAgeBiological, pawnAgeBiological + 10f, pawnAgeBiological + 40f, 0.1f, otherPawnAgeBiological);
                 }
             }
-            float num3 = 1f;
-            num3 *= Mathf.Lerp(0.2f, 1f, otherPawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Talking));
-            num3 *= Mathf.Lerp(0.2f, 1f, otherPawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Manipulation));
-            num3 *= Mathf.Lerp(0.2f, 1f, otherPawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Moving));
-            float num4 = 1f;
+            float interactionMod = 1f;
+            interactionMod *= Mathf.Lerp(0.2f, 1f, otherPawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Talking));
+            interactionMod *= Mathf.Lerp(0.2f, 1f, otherPawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Manipulation));
+            interactionMod *= Mathf.Lerp(0.2f, 1f, otherPawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Moving));
+            float attractionMod = 1f;
             foreach (PawnRelationDef current in pawn.GetRelations(otherPawn))
             {
-                num4 *= current.attractionFactor;
+                attractionMod *= current.attractionFactor;
             }
+            // Beauty
             int otherPawnDegreeOfBeauty = 0;
             int pawnDegreeOfBeauty = pawn.story.traits.DegreeOfTrait(TraitDefOf.Beauty);
             if (otherPawn.RaceProps.Humanlike)
             {
                 otherPawnDegreeOfBeauty = otherPawn.story.traits.DegreeOfTrait(TraitDefOf.Beauty);
             }
-            float num6 = 1f;
+            float beautyMod = 1f;
             if (otherPawnDegreeOfBeauty < 0)
             {
                 if (pawnDegreeOfBeauty < otherPawnDegreeOfBeauty)
                 {
-                    num6 = 1.2f;
+                    beautyMod = 1.2f;
                 }
                 else
                 {
-                    num6 = 0.3f;
+                    beautyMod = 0.3f;
                 }
-                //   num6 = 0.3f;
             }
             else if (otherPawnDegreeOfBeauty == 1)
             {
-                num6 = 1.8f;
+                beautyMod = 1.8f;
             }
             else if (otherPawnDegreeOfBeauty == 2)
             {
-                num6 = 2.4f;
+                beautyMod = 2.4f;
             }
             float num7 = Mathf.InverseLerp(15f, 18f, pawnAgeBiological);
             float num8 = Mathf.InverseLerp(15f, 18f, otherPawnAgeBiological);
-            return num * num2 * num3 * num4 * num7 * num8 * num6;
+            return sexualityMod * ageMod * interactionMod * attractionMod * num7 * num8 * beautyMod;
         }
 
     }

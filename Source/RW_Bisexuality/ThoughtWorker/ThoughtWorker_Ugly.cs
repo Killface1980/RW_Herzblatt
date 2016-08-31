@@ -1,14 +1,12 @@
 ﻿using RimWorld;
 using Verse;
 
-namespace RW_Bisexuality
+namespace RW_Herzblatt
 {
     public class ThoughtWorker_Ugly : ThoughtWorker
     {
         protected override ThoughtState CurrentSocialStateInternal(Pawn pawn, Pawn other)
         {
-
-            //to do: fix ugly thoughts
             if (!other.RaceProps.Humanlike || !RelationsUtility.PawnsKnowEachOther(pawn, other))
             {
                 return false;

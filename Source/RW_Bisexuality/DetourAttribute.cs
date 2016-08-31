@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace RW_Bisexuality
+namespace RW_Herzblatt
 {
 
     [AttributeUsage(AttributeTargets.Method)]

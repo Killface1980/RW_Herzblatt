@@ -22,6 +22,22 @@ namespace RW_Herzblatt.Detouring
             return (Pawn)_pawn.GetValue(_this);
         }
 
+        internal static float OutcastScore(Pawn pawn)
+        {
+            float num = 1f;
+            if (pawn.story.traits.HasTrait(TraitDefOf.AnnoyingVoice))
+                num += 0.25f;
+            if (pawn.story.traits.HasTrait(TraitDefOf.CreepyBreathing))
+                num += 0.25f;
+            if (RelationsUtility.IsDisfigured(pawn))
+                num += 0.15f;
+            if (pawn.story.traits.DegreeOfTrait(TraitDefOf.Beauty) == -1)
+                num += 0.2f;
+            if (pawn.story.traits.DegreeOfTrait(TraitDefOf.Beauty) == -2)
+                num += 0.8f;
+            return num;
+        }
+
         [Detour(typeof(Pawn_RelationsTracker), bindingFlags = (BindingFlags.Instance | BindingFlags.Public))]
         public static float AttractionTo(this Pawn_RelationsTracker _this, Pawn otherPawn)
         {
@@ -50,7 +66,7 @@ namespace RW_Herzblatt.Detouring
                 }
                 else
                 {
-                    if (!pawn.story.traits.HasTrait(TraitDef.Named("Bisexual"))&& otherPawn.gender == Gender.Male)
+                    if (!pawn.story.traits.HasTrait(TraitDef.Named("Bisexual")) && otherPawn.gender == Gender.Male)
                     {
                         sexualityMod = 0.03f;
                     }
@@ -99,6 +115,12 @@ namespace RW_Herzblatt.Detouring
             {
                 attractionMod *= current.attractionFactor;
             }
+
+            //Outcasts
+            float outCast = 1f;
+            if (OutcastScore(pawn) > OutcastScore(otherPawn))
+                outCast *= OutcastScore(pawn) * OutcastScore(otherPawn);
+
             // Beauty
             int otherPawnDegreeOfBeauty = 0;
             int pawnDegreeOfBeauty = pawn.story.traits.DegreeOfTrait(TraitDefOf.Beauty);
@@ -111,7 +133,11 @@ namespace RW_Herzblatt.Detouring
             {
                 if (pawnDegreeOfBeauty < otherPawnDegreeOfBeauty)
                 {
-                    beautyMod = 1.2f;
+                    beautyMod = 1.6f;
+                }
+                else if(pawnDegreeOfBeauty == otherPawnDegreeOfBeauty)
+                {
+                    beautyMod = 0.8f;
                 }
                 else
                 {
@@ -120,7 +146,7 @@ namespace RW_Herzblatt.Detouring
             }
             else if (otherPawnDegreeOfBeauty == 1)
             {
-                beautyMod = 1.8f;
+                beautyMod = 1.6f;
             }
             else if (otherPawnDegreeOfBeauty == 2)
             {
@@ -128,7 +154,7 @@ namespace RW_Herzblatt.Detouring
             }
             float num7 = Mathf.InverseLerp(15f, 18f, pawnAgeBiological);
             float num8 = Mathf.InverseLerp(15f, 18f, otherPawnAgeBiological);
-            return sexualityMod * ageMod * interactionMod * attractionMod * num7 * num8 * beautyMod;
+            return sexualityMod * ageMod * interactionMod * attractionMod * num7 * num8 * beautyMod * outCast;
         }
 
     }

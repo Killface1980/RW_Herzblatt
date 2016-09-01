@@ -5,17 +5,15 @@
   <url>https://ludeon.com/forums/index.php?topic=20771.msg228265#msg228265</url>
   <targetVersion>0.15.1280</targetVersion>
   <description>
-    Adds bisexuality to RimWorld. Bisexual pawns have no preference and can choose both genders as partner.
-
-    modifies the opinion and attraction of:
+Modifies the opinion and attraction of:
     - ugly pawns
     - creepy breathing pawns
     - annoying voice pawns
     - disfigured pawns
-    towards each other so that they show more empathy.
-    No more outcasts among outcasts.
+towards each other so that they show more empathy.
+No outcasts among outcasts.
 
-    After the Psychology mod also added bisexuality, this mod's main feature is the mood offset for socially not accepted pawns towards each other. Just load this mod after Psychology.
-
-  </description>
+Also adds bisexuality to RimWorld. Bisexual pawns have no preference and can choose both genders as partner.
+After the Psychology mod also added bisexuality, this mod's main feature is the mood offset for socially not accepted pawns towards each other. Just load this mod after Psychology.
+ </description>
 </ModMetaData>

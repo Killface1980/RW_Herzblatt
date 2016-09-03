@@ -11,6 +11,9 @@ namespace RW_Herzblatt
             {
                 return false;
             }
+            if (pawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Sight) < 0.8f)
+                return false;
+
             int otherDegreeOfBeauty = other.story.traits.DegreeOfTrait(TraitDefOf.Beauty);
             int pawnDegreeOfBeauty = pawn.story.traits.DegreeOfTrait(TraitDefOf.Beauty);
             if (otherDegreeOfBeauty == -1)

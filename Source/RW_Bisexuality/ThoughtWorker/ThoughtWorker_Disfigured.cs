@@ -17,6 +17,9 @@ namespace RW_Herzblatt
                 return false;
             }
 
+            if (pawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Sight) < 0.8f)
+                return false;
+
             if (RelationsUtility.IsDisfigured(pawn) && RelationsUtility.IsDisfigured(other))
             {
                 return ThoughtState.ActiveAtStage(1);
@@ -26,6 +29,9 @@ namespace RW_Herzblatt
             {
                 return false;
             }
+
+
+
             return ThoughtState.ActiveAtStage(0);
         }
     }

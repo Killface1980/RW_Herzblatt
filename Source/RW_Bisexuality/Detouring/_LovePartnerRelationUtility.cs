@@ -20,7 +20,7 @@ namespace RW_Herzblatt.Detouring
             {
                 return 0f;
             }
-            if (pawn.gender == otherPawn.gender && (!otherPawn.story.traits.HasTrait(TraitDefOf.Gay) || !otherPawn.story.traits.HasTrait(TraitDef.Named("Bisexual")) || !request.AllowGay))
+            if (pawn.gender == otherPawn.gender && (!otherPawn.story.traits.HasTrait(TraitDefOf.Gay) || !otherPawn.story.traits.HasTrait(TraitDefOfHerzblatt.Bisexual) || !request.AllowGay))
             {
                 return 0f;
             }

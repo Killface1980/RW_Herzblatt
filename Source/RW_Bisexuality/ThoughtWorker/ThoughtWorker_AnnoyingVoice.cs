@@ -13,6 +13,9 @@ namespace RW_Herzblatt
                 return false;
             }
 
+            if (pawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Hearing) < 0.7f)
+                return false;
+
             if (pawn.story.traits.HasTrait(TraitDefOf.AnnoyingVoice) && other.story.traits.HasTrait(TraitDefOf.AnnoyingVoice))
                     return ThoughtState.ActiveAtStage(1);
 

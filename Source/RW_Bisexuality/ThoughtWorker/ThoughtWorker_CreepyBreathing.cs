@@ -1,5 +1,6 @@
 ﻿using System;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace RW_Herzblatt
@@ -12,6 +13,12 @@ namespace RW_Herzblatt
             {
                 return false;
             }
+
+            if (pawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Breathing) <= 0.9f)
+                return false;
+
+            if (pawn.health.capacities.GetEfficiency(PawnCapacityDefOf.Hearing) < 0.7f)
+                return false;
 
             if (pawn.story.traits.HasTrait(TraitDefOf.CreepyBreathing) && other.story.traits.HasTrait(TraitDefOf.CreepyBreathing))
                 return ThoughtState.ActiveAtStage(1);

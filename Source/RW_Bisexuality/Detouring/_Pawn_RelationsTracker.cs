@@ -66,7 +66,7 @@ namespace RW_Herzblatt.Detouring
                 }
                 else
                 {
-                    if (!pawn.story.traits.HasTrait(TraitDef.Named("Bisexual")) && otherPawn.gender == Gender.Male)
+                    if (!pawn.story.traits.HasTrait(TraitDefOfHerzblatt.Bisexual) && otherPawn.gender == Gender.Male)
                     {
                         sexualityMod = 0.03f;
                     }
@@ -87,7 +87,7 @@ namespace RW_Herzblatt.Detouring
                 }
                 else
                 {
-                    if (!pawn.story.traits.HasTrait(TraitDef.Named("Bisexual")) && otherPawn.gender == Gender.Female)
+                    if (!pawn.story.traits.HasTrait(TraitDefOfHerzblatt.Bisexual) && otherPawn.gender == Gender.Female)
                     {
                         sexualityMod = 0.15f;
                     }
@@ -120,6 +120,8 @@ namespace RW_Herzblatt.Detouring
             float outCast = 1f;
             if (OutcastScore(pawn) > OutcastScore(otherPawn))
                 outCast *= OutcastScore(pawn) * OutcastScore(otherPawn);
+            if (OutcastScore(pawn) !=1f && OutcastScore(otherPawn)>= OutcastScore(pawn))
+                outCast *= 0.5f* OutcastScore(pawn) * OutcastScore(otherPawn);
 
             // Beauty
             int otherPawnDegreeOfBeauty = 0;

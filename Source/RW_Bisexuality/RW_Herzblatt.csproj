@@ -60,6 +60,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TraitDefOfHerzblatt.cs" />
+    <Compile Include="Detouring\_PawnRelationWorker_Sibling.cs" />
+    <Compile Include="Detouring\_ChildRelationUtility.cs" />
     <Compile Include="Herzblatt_SpecialInjector.cs" />
     <Compile Include="DetourAttribute.cs" />
     <Compile Include="ThoughtWorker\ThoughtWorker_Disfigured.cs" />

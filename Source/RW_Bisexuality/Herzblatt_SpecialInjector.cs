@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using RimWorld;
-using RW_Herzblatt.NoCCL;
 using Verse;
 #if NoCCL
-
+using RW_Herzblatt.NoCCL;
 #else
 using CommunityCoreLibrary;
 #endif

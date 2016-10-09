@@ -11,17 +11,15 @@ namespace RW_Herzblatt.Detouring
 
         internal static Pawn GetPawn(this Pawn_RelationsTracker _this)
         {
-            bool flag = _Pawn_RelationsTracker._pawn == null;
-            if (flag)
+            if (_pawn == null)
             {
-                _Pawn_RelationsTracker._pawn = typeof(Pawn_RelationsTracker).GetField("pawn", BindingFlags.Instance | BindingFlags.NonPublic);
-                bool flag2 = _Pawn_RelationsTracker._pawn == null;
-                if (flag2)
+                _pawn = typeof(Pawn_RelationsTracker).GetField("pawn", BindingFlags.Instance | BindingFlags.NonPublic);
+                if (_pawn == null)
                 {
-                    Log.ErrorOnce("Unable to reflect Pawn_RelationsTracker.pawn!", 305432421);
+                    Log.ErrorOnce("Unable to reflect Pawn_RelationsTracker.pawn!", 0x12348765);
                 }
             }
-            return (Pawn)_Pawn_RelationsTracker._pawn.GetValue(_this);
+            return (Pawn)_pawn.GetValue(_this);
         }
 
 
@@ -165,35 +163,40 @@ namespace RW_Herzblatt.Detouring
 
         internal static bool PawnsAreValidMatches(Pawn pawn1, Pawn pawn2)
         {
-            bool flag = !pawn1.RaceProps.Humanlike || (pawn1.RaceProps.Humanlike && !pawn2.RaceProps.Humanlike) || pawn1 == pawn2 || pawn1.RaceProps.fleshType != FleshType.Normal || pawn2.RaceProps.fleshType > FleshType.Normal;
-            return !flag;
+            /*
+Log.Message(
+    string.Format(
+        "PawnsAreValidMatches( {0}, {1} )\n\t{0} is human like: {2}\n\t{1} is human like: {3}\n\t{0} gender: {4}\n\t{1} gender: {5}\n\t{0} is gay: {6}\n\t{1} is gay: {7}\n\t{0} PawnKindDef: {8}\n\t{1} PawnKindDef: {9}",
+        pawn1.LabelShort,
+        pawn2.LabelShort,
+        pawn1.RaceProps.Humanlike,
+        pawn2.RaceProps.Humanlike,
+        pawn1.gender,
+        pawn2.gender,
+        pawn1.story.traits.HasTrait(TraitDefOf.Gay),
+        pawn2.story.traits.HasTrait(TraitDefOf.Gay),
+        pawn1.kindDef.defName,
+        pawn2.kindDef.defName
+    ) );
+*/
+
+            if (!pawn1.RaceProps.Humanlike || (pawn1.RaceProps.Humanlike && !pawn2.RaceProps.Humanlike) ||
+                pawn1 == pawn2 || pawn1.RaceProps.fleshType != FleshType.Normal ||
+                pawn2.RaceProps.fleshType > FleshType.Normal)
+                return false;
+            return true;
         }
 
         [Detour(typeof(Pawn_RelationsTracker), bindingFlags = (BindingFlags.Instance | BindingFlags.Public))]
-        public static float CompatibilityWith(this Pawn_RelationsTracker _this, Pawn otherPawn)
+        internal static float CompatibilityWith(this Pawn_RelationsTracker _this, Pawn otherPawn)
         {
-            Pawn pawn = _this.GetPawn();
-
-            bool flag = !PawnsAreValidMatches(pawn, otherPawn);
-            if (flag)
+            var pawn = _this.GetPawn();
+            if (!PawnsAreValidMatches(pawn, otherPawn))
             {
                 return 0f;
             }
-
-            float x = Mathf.Abs(pawn.ageTracker.AgeBiologicalYearsFloat - otherPawn.ageTracker.AgeBiologicalYearsFloat);
-            float num = GenMath.LerpDouble(0f, 20f, 0.45f, -0.45f, x);
-            num = Mathf.Clamp(num, -0.45f, 0.45f);
-            float num2 = ConstantPerPawnsPairCompatibilityOffset(pawn, otherPawn.thingIDNumber);
-            return num + num2;
+            return Mathf.Clamp(GenMath.LerpDouble(0.0f, 20f, 0.45f, -0.45f, Mathf.Abs(pawn.ageTracker.AgeBiologicalYearsFloat - otherPawn.ageTracker.AgeBiologicalYearsFloat)), -0.45f, 0.45f) + _this.ConstantPerPawnsPairCompatibilityOffset(otherPawn.thingIDNumber);
         }
-        public static float ConstantPerPawnsPairCompatibilityOffset(Pawn pawn, int otherPawnID)
-        {
 
-            Rand.PushSeed();
-            Rand.Seed = (pawn.thingIDNumber ^ otherPawnID) * 37;
-            float result = Rand.GaussianAsymmetric(0.3f, 1f, 1.4f);
-            Rand.PopSeed();
-            return result;
-        }
     }
 }

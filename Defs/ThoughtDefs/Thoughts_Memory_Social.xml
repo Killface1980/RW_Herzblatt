@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThoughtDefs>
+  
+  <!-- Romance -->
+  
+  <ThoughtDef>
+    <defName>RebuffedMyRomanceAttempt</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>7</durationDays>
+    <stackLimit>300</stackLimit>
+    <stackLimitPerPawn>3</stackLimitPerPawn>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>rebuffed me</label>
+        <baseOpinionOffset>-10</baseOpinionOffset>
+      </li>
+    </stages>
+    <thoughtToMake>RebuffedMyRomanceAttemptMood</thoughtToMake>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RebuffedMyRomanceAttemptMood</defName>
+    <durationDays>2.0</durationDays>
+    <stackLimit>3</stackLimit>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>rebuffed by {0}</label>
+        <description>I attempted to create a romance, but I got the cold shoulder. Feels bad man.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>FailedRomanceAttemptOnMe</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>10.0</durationDays>
+    <stackLimit>300</stackLimit>
+    <stackLimitPerPawn>3</stackLimitPerPawn>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>failed to romance me</label>
+        <baseOpinionOffset>-15</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>RejectedMyProposal</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>40.0</durationDays>
+    <stackLimit>300</stackLimit>
+    <stackLimitPerPawn>1</stackLimitPerPawn>
+    <stackedEffectMultiplier>0.95</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>rejected my proposal</label>
+        <baseOpinionOffset>-30</baseOpinionOffset>
+      </li>
+    </stages>
+    <thoughtToMake>RejectedMyProposalMood</thoughtToMake>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RejectedMyProposalMood</defName>
+    <durationDays>25.0</durationDays>
+    <stackLimit>3</stackLimit>
+    <stackedEffectMultiplier>0.95</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>my proposal was rejected by {0}</label>
+        <description>I thought we were meant to marry. But I was just shot down.</description>
+        <baseMoodEffect>-18</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+    
+</ThoughtDefs>

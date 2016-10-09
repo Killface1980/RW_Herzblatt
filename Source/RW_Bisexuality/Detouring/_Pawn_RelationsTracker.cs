@@ -5,22 +5,25 @@ using Verse;
 
 namespace RW_Herzblatt.Detouring
 {
-    internal static class _Pawn_RelationsTracker
+    public static class _Pawn_RelationsTracker
     {
         internal static FieldInfo _pawn;
 
         internal static Pawn GetPawn(this Pawn_RelationsTracker _this)
         {
-            if (_pawn == null)
+            bool flag = _Pawn_RelationsTracker._pawn == null;
+            if (flag)
             {
-                _pawn = typeof(Pawn_RelationsTracker).GetField("pawn", BindingFlags.Instance | BindingFlags.NonPublic);
-                if (_pawn == null)
+                _Pawn_RelationsTracker._pawn = typeof(Pawn_RelationsTracker).GetField("pawn", BindingFlags.Instance | BindingFlags.NonPublic);
+                bool flag2 = _Pawn_RelationsTracker._pawn == null;
+                if (flag2)
                 {
                     Log.ErrorOnce("Unable to reflect Pawn_RelationsTracker.pawn!", 305432421);
                 }
             }
-            return (Pawn)_pawn.GetValue(_this);
+            return (Pawn)_Pawn_RelationsTracker._pawn.GetValue(_this);
         }
+
 
         internal static float OutcastScore(Pawn pawn)
         {
@@ -39,14 +42,15 @@ namespace RW_Herzblatt.Detouring
         }
 
         [Detour(typeof(Pawn_RelationsTracker), bindingFlags = (BindingFlags.Instance | BindingFlags.Public))]
-        public static float AttractionTo(this Pawn_RelationsTracker _this, Pawn otherPawn)
+        internal static float AttractionTo(this Pawn_RelationsTracker _this, Pawn otherPawn)
         {
-            var pawn = _this.GetPawn();
-
-            if (pawn.def != otherPawn.def || pawn == otherPawn)
+            Pawn pawn = _this.GetPawn();
+            bool flag = !PawnsAreValidMatches(pawn, otherPawn);
+            if (flag)
             {
                 return 0f;
             }
+
             float sexualityMod = 1f;
             float ageMod = 1f;
             float pawnAgeBiological = pawn.ageTracker.AgeBiologicalYearsFloat;
@@ -120,8 +124,8 @@ namespace RW_Herzblatt.Detouring
             float outCast = 1f;
             if (OutcastScore(pawn) > OutcastScore(otherPawn))
                 outCast *= OutcastScore(pawn) * OutcastScore(otherPawn);
-            if (OutcastScore(pawn) !=1f && OutcastScore(otherPawn)>= OutcastScore(pawn))
-                outCast *= 0.5f* OutcastScore(pawn) * OutcastScore(otherPawn);
+            if (OutcastScore(pawn) != 1f && OutcastScore(otherPawn) >= OutcastScore(pawn))
+                outCast *= 0.5f * OutcastScore(pawn) * OutcastScore(otherPawn);
 
             // Beauty
             int otherPawnDegreeOfBeauty = 0;
@@ -137,7 +141,7 @@ namespace RW_Herzblatt.Detouring
                 {
                     beautyMod = 1.6f;
                 }
-                else if(pawnDegreeOfBeauty == otherPawnDegreeOfBeauty)
+                else if (pawnDegreeOfBeauty == otherPawnDegreeOfBeauty)
                 {
                     beautyMod = 0.8f;
                 }
@@ -159,5 +163,37 @@ namespace RW_Herzblatt.Detouring
             return sexualityMod * ageMod * interactionMod * attractionMod * num7 * num8 * beautyMod * outCast;
         }
 
+        internal static bool PawnsAreValidMatches(Pawn pawn1, Pawn pawn2)
+        {
+            bool flag = !pawn1.RaceProps.Humanlike || (pawn1.RaceProps.Humanlike && !pawn2.RaceProps.Humanlike) || pawn1 == pawn2 || pawn1.RaceProps.fleshType != FleshType.Normal || pawn2.RaceProps.fleshType > FleshType.Normal;
+            return !flag;
+        }
+
+        [Detour(typeof(Pawn_RelationsTracker), bindingFlags = (BindingFlags.Instance | BindingFlags.Public))]
+        public static float CompatibilityWith(this Pawn_RelationsTracker _this, Pawn otherPawn)
+        {
+            Pawn pawn = _this.GetPawn();
+
+            bool flag = !PawnsAreValidMatches(pawn, otherPawn);
+            if (flag)
+            {
+                return 0f;
+            }
+
+            float x = Mathf.Abs(pawn.ageTracker.AgeBiologicalYearsFloat - otherPawn.ageTracker.AgeBiologicalYearsFloat);
+            float num = GenMath.LerpDouble(0f, 20f, 0.45f, -0.45f, x);
+            num = Mathf.Clamp(num, -0.45f, 0.45f);
+            float num2 = ConstantPerPawnsPairCompatibilityOffset(pawn, otherPawn.thingIDNumber);
+            return num + num2;
+        }
+        public static float ConstantPerPawnsPairCompatibilityOffset(Pawn pawn, int otherPawnID)
+        {
+
+            Rand.PushSeed();
+            Rand.Seed = (pawn.thingIDNumber ^ otherPawnID) * 37;
+            float result = Rand.GaussianAsymmetric(0.3f, 1f, 1.4f);
+            Rand.PopSeed();
+            return result;
+        }
     }
 }

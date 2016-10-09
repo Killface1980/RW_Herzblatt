@@ -82,8 +82,12 @@
     <Content Include="..\..\Defs\ModHelperDefs\ModHelper.xml">
       <Link>ModHelper.xml</Link>
     </Content>
+    <Content Include="..\..\Defs\ThoughtDefs\Thoughts_Memory_Social.xml">
+      <Link>Defs\Thoughts_Memory_Social.xml</Link>
+    </Content>
     <Content Include="..\..\Defs\ThoughtDefs\Thoughts_Situation_Social.xml">
       <Link>Defs\Thoughts_Situation_Social.xml</Link>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="..\..\Defs\TraitDefs\TraitDefs.xml">
       <Link>Defs\TraitDefs.xml</Link>

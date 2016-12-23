@@ -33,13 +33,13 @@ namespace RW_Herzblatt.Detour
             {
                 return 0f;
             }
-            var GetSkinWhiteness = typeof(ChildRelationUtility).GetMethod("GetSkinWhiteness", BindingFlags.Static | BindingFlags.NonPublic);
+            var GetMelanin = typeof(ChildRelationUtility).GetMethod("GetMelanin", BindingFlags.Static | BindingFlags.NonPublic);
             var GetSkinColorFactor = typeof(ChildRelationUtility).GetMethod("GetSkinColorFactor", BindingFlags.Static | BindingFlags.NonPublic);
             var GetParentAgeFactor = typeof(ChildRelationUtility).GetMethod("GetParentAgeFactor", BindingFlags.Static | BindingFlags.NonPublic);
             var NumberOfChildrenFemaleWantsEver = typeof(ChildRelationUtility).GetMethod("NumberOfChildrenFemaleWantsEver", BindingFlags.Static | BindingFlags.NonPublic);
-            if (GetSkinWhiteness == null)
+            if (GetMelanin == null)
             {
-                Log.ErrorOnce("Unable to reflect ChildRelationUtility.GetSkinWhiteness!", 305432421);
+                Log.ErrorOnce("Unable to reflect ChildRelationUtility.GetMelanin!", 305432421);
                 return 0f;
             }
             if (GetSkinColorFactor == null)
@@ -57,9 +57,9 @@ namespace RW_Herzblatt.Detour
                 Log.ErrorOnce("Unable to reflect ChildRelationUtility.NumberOfChildrenFemaleWantsEver!", 305432421);
                 return 0f;
             }
-            float? skinWhiteness = (float?)GetSkinWhiteness.Invoke(null, new object[] { child, childGenerationRequest });
-            float? skinWhiteness2 = (float?)GetSkinWhiteness.Invoke(null, new object[] { father, fatherGenerationRequest });
-            float? skinWhiteness3 = (float?)GetSkinWhiteness.Invoke(null, new object[] { mother, motherGenerationRequest });
+            float? skinWhiteness = (float?)GetMelanin.Invoke(null, new object[] { child, childGenerationRequest });
+            float? skinWhiteness2 = (float?)GetMelanin.Invoke(null, new object[] { father, fatherGenerationRequest });
+            float? skinWhiteness3 = (float?)GetMelanin.Invoke(null, new object[] { mother, motherGenerationRequest });
             bool fatherIsNew = father != null && child.GetFather() != father;
             bool motherIsNew = mother != null && child.GetMother() != mother;
             float skinColorFactor = (float)GetSkinColorFactor.Invoke(null, new object[] { skinWhiteness, skinWhiteness2, skinWhiteness3, fatherIsNew, motherIsNew });

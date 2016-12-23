@@ -7,6 +7,7 @@
     <defName>Ugly</defName>
     <thoughtClass>Thought_SituationalSocial</thoughtClass>
     <workerClass>RW_Herzblatt.ThoughtWorker_Ugly</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
     <stages>
       <li>
         <label>ugly</label>
@@ -40,6 +41,7 @@
     <defName>AnnoyingVoice</defName>
     <thoughtClass>Thought_SituationalSocial</thoughtClass>
     <workerClass>RW_Herzblatt.ThoughtWorker_AnnoyingVoice</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
     <stages>
      <li>
         <label>annoying voice</label>
@@ -56,6 +58,7 @@
     <defName>CreepyBreathing</defName>
     <thoughtClass>Thought_SituationalSocial</thoughtClass>
     <workerClass>RW_Herzblatt.ThoughtWorker_CreepyBreathing</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
     <stages>
       <li>
         <label>creepy breathing</label>
@@ -72,9 +75,7 @@
     <defName>Disfigured</defName>
     <thoughtClass>Thought_SituationalSocial</thoughtClass>
     <workerClass>RW_Herzblatt.ThoughtWorker_Disfigured</workerClass>
-    <nullifyingTraits>
-      <li>Psychopath</li>
-    </nullifyingTraits>
+    <validWhileDespawned>true</validWhileDespawned>
     <stages>
      <li>
         <label>disfigured</label>

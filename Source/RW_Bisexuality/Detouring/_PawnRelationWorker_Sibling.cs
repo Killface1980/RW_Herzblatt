@@ -46,14 +46,13 @@ namespace RW_Herzblatt.Detour
                 bool tryMedievalOrBetter = faction != null && faction.def.techLevel >= TechLevel.Medieval;
                 Find.FactionManager.TryGetRandomNonColonyHumanlikeFaction(out faction, tryMedievalOrBetter);
             }
-            float? fixedChronologicalAge = new float?(value2);
             Gender? fixedGender = new Gender?(genderToGenerate);
-            float? fixedSkinWhiteness = new float?(value3);
-            PawnGenerationRequest request = new PawnGenerationRequest(existingChild.kindDef, faction, PawnGenerationContext.NonPlayer, true, false, true, true, false, false, 1f, false, allowGay, true, null, new float?(value), fixedChronologicalAge, fixedGender, fixedSkinWhiteness, last);
-            Pawn pawn = PawnGenerator.GeneratePawn(request);
+            float? fixedMelanin = new float?(value3);
+            string fixedLastName = last;
+            PawnGenerationRequest request = new PawnGenerationRequest(existingChild.kindDef, faction, PawnGenerationContext.NonPlayer, null, true, false, true, true, false, false, 1f, false, allowGay, true, null, new float?(value), new float?(value2), fixedGender, fixedMelanin, fixedLastName); Pawn pawn = PawnGenerator.GeneratePawn(request);
             if (!Find.WorldPawns.Contains(pawn))
             {
-                Find.WorldPawns.PassToWorld(pawn, PawnDiscardDecideMode.Keep);
+                Find.WorldPawns.PassToWorld(pawn, PawnDiscardDecideMode.KeepForever);
             }
             return pawn;
         }
@@ -66,27 +65,27 @@ namespace RW_Herzblatt.Detour
             biologicalAge = Rand.Range(minBioAgeToHaveChildren, Mathf.Min(existingChild.RaceProps.lifeExpectancy, chronologicalAge));
             if (existingChild.GetFather() != null)
             {
-                skinWhiteness = ParentRelationUtility.GetRandomSecondParentSkinColor(existingChild.GetFather().story.skinWhiteness, existingChild.story.skinWhiteness, childRequest.FixedSkinWhiteness);
+                skinWhiteness = ParentRelationUtility.GetRandomSecondParentSkinColor(existingChild.GetFather().story.melanin, existingChild.story.melanin, childRequest.FixedMelanin);
             }
             else if (existingChild.GetMother() != null)
             {
-                skinWhiteness = ParentRelationUtility.GetRandomSecondParentSkinColor(existingChild.GetMother().story.skinWhiteness, existingChild.story.skinWhiteness, childRequest.FixedSkinWhiteness);
+                skinWhiteness = ParentRelationUtility.GetRandomSecondParentSkinColor(existingChild.GetMother().story.melanin, existingChild.story.melanin, childRequest.FixedMelanin);
             }
-            else if (!childRequest.FixedSkinWhiteness.HasValue)
+            else if (!childRequest.FixedMelanin.HasValue)
             {
-                skinWhiteness = PawnSkinColors.GetRandomSkinColorSimilarTo(existingChild.story.skinWhiteness, 0f, 1f);
+                skinWhiteness = PawnSkinColors.GetRandomMelaninSimilarTo(existingChild.story.melanin, 0f, 1f);
             }
             else
             {
-                float num = Mathf.Min(childRequest.FixedSkinWhiteness.Value, existingChild.story.skinWhiteness);
-                float num2 = Mathf.Max(childRequest.FixedSkinWhiteness.Value, existingChild.story.skinWhiteness);
+                float num = Mathf.Min(childRequest.FixedMelanin.Value, existingChild.story.melanin);
+                float num2 = Mathf.Max(childRequest.FixedMelanin.Value, existingChild.story.melanin);
                 if (Rand.Value < 0.5f)
                 {
-                    skinWhiteness = PawnSkinColors.GetRandomSkinColorSimilarTo(num, 0f, num);
+                    skinWhiteness = PawnSkinColors.GetRandomMelaninSimilarTo(num, 0f, num);
                 }
                 else
                 {
-                    skinWhiteness = PawnSkinColors.GetRandomSkinColorSimilarTo(num2, num2, 1f);
+                    skinWhiteness = PawnSkinColors.GetRandomMelaninSimilarTo(num2, num2, 1f);
                 }
             }
             lastName = null;

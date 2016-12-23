@@ -40,14 +40,19 @@ namespace RW_Herzblatt.Detouring
         }
 
         [Detour(typeof(Pawn_RelationsTracker), bindingFlags = (BindingFlags.Instance | BindingFlags.Public))]
-        internal static float AttractionTo(this Pawn_RelationsTracker _this, Pawn otherPawn)
+        internal static float SecondaryRomanceChanceFactor(this Pawn_RelationsTracker _this, Pawn otherPawn)
         {
             Pawn pawn = _this.GetPawn();
-            bool flag = !PawnsAreValidMatches(pawn, otherPawn);
-            if (flag)
+            bool match = PawnsAreValidMatches(pawn, otherPawn);
+            if (!match)
             {
                 return 0f;
             }
+
+            Rand.PushSeed();
+            Rand.Seed = pawn.HashOffset();
+            bool flag = Rand.Value < 0.015f;
+            Rand.PopSeed();
 
             float sexualityMod = 1f;
             float ageMod = 1f;
@@ -56,43 +61,49 @@ namespace RW_Herzblatt.Detouring
             if (pawn.gender == Gender.Male)
             {
                 // if (pawn.RaceProps.Humanlike && pawn.story.traits.HasTrait(TraitDefOf.Gay))
-                if (pawn.story.traits.HasTrait(TraitDefOf.Gay))
+                if (!flag)
                 {
-                    if (pawn.RaceProps.Humanlike && pawn.story.traits.HasTrait(TraitDefOf.Gay))
+                    if (pawn.story.traits.HasTrait(TraitDefOf.Gay))
                     {
-                        if (otherPawn.gender == Gender.Female)
+                        if (pawn.RaceProps.Humanlike && pawn.story.traits.HasTrait(TraitDefOf.Gay))
                         {
-                            return 0f;
+                            if (otherPawn.gender == Gender.Female)
+                            {
+                                return 0f;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    if (!pawn.story.traits.HasTrait(TraitDefOfHerzblatt.Bisexual) && otherPawn.gender == Gender.Male)
+                    else
                     {
-                        sexualityMod = 0.03f;
-                    }
+                        if (!pawn.story.traits.HasTrait(TraitDefOfHerzblatt.Bisexual) && otherPawn.gender == Gender.Male)
+                        {
+                            sexualityMod = 0f;
+                        }
+                    } 
                 }
-                ageMod = GenMath.FlatHill(16f, 20f, pawnAgeBiological, pawnAgeBiological + 15f, otherPawnAgeBiological);
+                ageMod = GenMath.FlatHill(0f, 16f, 20f, pawnAgeBiological, pawnAgeBiological + 15f,0.07f, otherPawnAgeBiological);
             }
             else if (pawn.gender == Gender.Female)
             {
-                if (pawn.story.traits.HasTrait(TraitDefOf.Gay))
+                if (!flag)
                 {
-                    if (pawn.RaceProps.Humanlike && pawn.story.traits.HasTrait(TraitDefOf.Gay))
+                    if (pawn.story.traits.HasTrait(TraitDefOf.Gay))
                     {
-                        if (otherPawn.gender == Gender.Male)
+                        if (pawn.RaceProps.Humanlike && pawn.story.traits.HasTrait(TraitDefOf.Gay))
                         {
-                            return 0f;
+                            if (otherPawn.gender == Gender.Male)
+                            {
+                                return 0f;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    if (!pawn.story.traits.HasTrait(TraitDefOfHerzblatt.Bisexual) && otherPawn.gender == Gender.Female)
+                    else
                     {
-                        sexualityMod = 0.15f;
-                    }
+                        if (!pawn.story.traits.HasTrait(TraitDefOfHerzblatt.Bisexual) && otherPawn.gender == Gender.Female)
+                        {
+                            sexualityMod = 0f;
+                        }
+                    } 
                 }
 
                 if (otherPawnAgeBiological < pawnAgeBiological - 10f)
@@ -105,7 +116,7 @@ namespace RW_Herzblatt.Detouring
                 }
                 else
                 {
-                    ageMod = GenMath.FlatHill(0.2f, pawnAgeBiological - 3f, pawnAgeBiological, pawnAgeBiological + 10f, pawnAgeBiological + 40f, 0.1f, otherPawnAgeBiological);
+                    ageMod = GenMath.FlatHill(0.2f, pawnAgeBiological - 3f, pawnAgeBiological, pawnAgeBiological + 10f, pawnAgeBiological + 30f, 0.1f, otherPawnAgeBiological);
                 }
             }
             float interactionMod = 1f;
@@ -195,7 +206,11 @@ Log.Message(
             {
                 return 0f;
             }
-            return Mathf.Clamp(GenMath.LerpDouble(0.0f, 20f, 0.45f, -0.45f, Mathf.Abs(pawn.ageTracker.AgeBiologicalYearsFloat - otherPawn.ageTracker.AgeBiologicalYearsFloat)), -0.45f, 0.45f) + _this.ConstantPerPawnsPairCompatibilityOffset(otherPawn.thingIDNumber);
+            float x = Mathf.Abs(pawn.ageTracker.AgeBiologicalYearsFloat - otherPawn.ageTracker.AgeBiologicalYearsFloat);
+            float num = GenMath.LerpDouble(0f, 20f, 0.45f, -0.45f, x);
+            num = Mathf.Clamp(num, -0.45f, 0.45f);
+            float num2 = _this.ConstantPerPawnsPairCompatibilityOffset(otherPawn.thingIDNumber);
+            return num + num2;
         }
 
     }

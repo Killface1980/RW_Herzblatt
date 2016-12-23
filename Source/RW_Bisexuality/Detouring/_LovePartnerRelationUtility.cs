@@ -56,13 +56,13 @@ namespace RW_Herzblatt.Detouring
                 num4 = 0.01f;
             }
             float num5;
-            if (request.FixedSkinWhiteness.HasValue)
+            if (request.FixedMelanin.HasValue)
             {
-                num5 = ChildRelationUtility.GetSkinSimilarityFactor(request.FixedSkinWhiteness.Value, otherPawn.story.skinWhiteness);
+                num5 = ChildRelationUtility.GetMelaninSimilarityFactor(request.FixedMelanin.Value, otherPawn.story.melanin);
             }
             else
             {
-                num5 = PawnSkinColors.GetWhitenessCommonalityFactor(otherPawn.story.skinWhiteness);
+                num5 = PawnSkinColors.GetMelaninCommonalityFactor(otherPawn.story.melanin);
             }
             return num * generationChanceAgeFactor * generationChanceAgeFactor2 * generationChanceAgeGapFactor * num3 * num5 * num4;
         }
